@@ -223,7 +223,7 @@ app.get("/envios",rutasProtegidas,
                     res.send(error)
                 } else {
                     if (resultado.length == 0) {
-                        res.send({ 'mensaje': 'No existe el id' })
+                        res.send({code:200, 'mensaje': 'No existe el id' })
                     } else {
                         res.send(resultado)
                     }
@@ -333,3 +333,5 @@ app.delete("/envios",rutasProtegidas,
 
     }
 )
+
+module.exports=app
