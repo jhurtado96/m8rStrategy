@@ -34,13 +34,17 @@ app.post('/login', (req, res) => {
             expiresIn: 1440
         });
 
+        
+
         res.send({
             code: 200,
             mensaje: 'Autenticación correcta',
             token: token,
-            expiresIn: 1440
+            expiresIn: 1440,
+            
         });
-
+            
+           
     } else {
 
         res.send({ code: 401, mensaje: "Datos incorrectos" })
@@ -60,7 +64,7 @@ rutasProtegidas.use((req, res, next) => {
 
             if (err) {
 
-                return res.send({ code: 401, mensaje: 'Token no válido' });
+                return res.send({ code: 403, mensaje: 'Token no válido o caducado, inicie sesión de nuevo' });
 
             } else {
 
@@ -72,7 +76,7 @@ rutasProtegidas.use((req, res, next) => {
 
     } else {
 
-        res.send({ codigo: 403, mensaje: 'No existe el token' });
+        res.send({ codigo: 401, mensaje: 'No existe el token' });
 
     }
 });
@@ -333,5 +337,13 @@ app.delete("/envios",rutasProtegidas,
 
     }
 )
+
+app.use(function (req, res, next) {
+
+    respuesta = { codigo: 404, mensaje: "URL no encontrada" }
+
+    res.status(404).send(respuesta)
+
+})
 
 module.exports=app
